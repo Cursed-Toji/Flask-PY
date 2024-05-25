@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <style>
+        input[type="submit"] {
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        input[type="submit"][value="submit"] {
+            background-color: green;
+        }
+
+        input[type="submit"][value="Edit"] {
+            background-color: blue;
+        }
+
+        input[type="submit"][value="Delete"] {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>BLOG</h1>
+    <form method="post" action="{{ url_for('add_post') }}">
+        <label>Titulo</label><br>
+        <input name="title"><br><br>
+
+        <label>Author</label><br>
+        <input name="author"><br><br>
+
+        <label>Content</label><br>
+        <textarea name="content"></textarea><br><br>
+
+        <input type="submit" value="submit">
+    </form>
+
+    <hr>
+
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <h4>{{ post.author }}</h4>
+        <p>{{ post.content }}</p>
+        <form method="post" action="{{ url_for('delete_post', id=post.id) }}" style="display:inline;">
+            <input type="submit" value="Delete">
+        </form>
+        <form method="get" action="{{ url_for('edit_post', id=post.id) }}" style="display:inline;">
+            <input type="submit" value="Edit">
+        </form>
+        <hr>
+    {% endfor %}
+</body>
+</html>
